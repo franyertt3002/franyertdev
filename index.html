@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FranyertDev Oficial</title>
+    <!-- Favicon circular pre-recortado -->
+    <link rel="icon" type="image/png" href="Imagenes/logo.png">
+    <link rel="stylesheet" href="styles/styles.css">
+</head> <!-- CORREGIDO: Cierre de head agregado -->
+
+<body>
+    <!-- Canvas que cubrirá todo el fondo de la pantalla -->
+    <canvas id="spaceCanvas"></canvas>
+
+    <!-- SECCIÓN INICIO -->
+    <section class="inicio">
+        <!-- Botón dentro de la sección inicio -->
+        <button id="btnSobreMi" class="btn-toggle-sobremi" aria-label="Abrir Sobre Mí">Sobre Mí</button>
+
+        <!-- Composicion de imagenes de perfil -->
+        <div id="yo">
+            <img class="yo" src="Imagenes/yo.png" alt="Perfil Franyert">
+        </div>
+
+        <!-- Panel Desplegable Sobre Mí (Oculto inicialmente) -->
+        <div class="sobreMi" id="panelSobreMi">
+            <h2 class="hobbys">Descripción De hobbies</h2>
+            
+            <div class="card-hobby">
+                <p id="pHobbys1">
+                    1. Me gusta mucho todo lo relacionado con la música, puesto que es una de las áreas que más han marcado mi vida desde pequeño.
+                </p>
+                <img class="bg-card-img" src="Imagenes/musica.jpg" alt="Ilustración música">
+            </div>
+
+            <div class="card-hobby">
+                <p id="pHobbys2">
+                    2. Me fascina todo lo relacionado con los juegos, tanto en la parte del desarrollo como en poder disfrutar cada entrega de cualquier saga, nunca me he cerrado a la posibilidad de conocer cualquier estilo de juegos o que de pronto estén en 2D o 3D ya que para mí es más que solo jugar, es poder disfrutar de cinemáticas increíbles, mecánicas extraordinarias y efectos visuales que llenan cualquier pantalla de incontables historias.
+                </p>
+                <img class="bg-card-img" src="Imagenes/juego.jpg" alt="Ilustración juegos">
+            </div>
+
+            <h2 class="personal">Lugar De Residencia</h2>
+            <div class="card-hobby">
+                <p id="pPersonal">
+                    Currently resido en mi hermoso país Venezuela, específicamente en la capital Caracas.
+                </p>
+                <img class="bg-card-img" src="Imagenes/caracas.jpg" alt="Ilustración Caracas">
+            </div>
+        </div>
+
+        <!-- Redes Sociales y Contratación (Filas Apiladas) -->
+        <div class="bottom-left-group">
+            <!-- Área de Redes Sociales -->
+            <div class="grupo-redes">
+                <h6 class="titulo-seccion-redes">Redes Sociales</h6>
+                <div class="redesSociales">
+                    <a href="https://www.instagram.com/franyertdev/" target="_blank" rel="noopener noreferrer" class="social-btn inst">
+                        <img class="insta" src="Imagenes/instagram.jpg" alt="Instagram">
+                        <h4>Instagram</h4>
+                    </a>
+                    <a href="https://www.tiktok.com/@franyertdev?_r=1&_t=ZS-999SAKcCDek" target="_blank" rel="noopener noreferrer" class="social-btn tik">
+                        <img class="tikT" src="Imagenes/tiktok.jpg" alt="TikTok">
+                        <h4>TikTok</h4>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Área de Contrataciones -->
+            <div class="grupo-contratacion">
+                <h6 class="titulo-seccion-redes">Contrataciones</h6>
+                <div class="cont">
+                    <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="social-btn gma">
+                        <img class="gmai" src="Imagenes/gmail.jpg" alt="Gmail">
+                        <h4>Gmail</h4>
+                    </a>
+                    <a href="https://www.fiverr.com/s/ZoByZpl" target="_blank" rel="noopener noreferrer" class="social-btn fiv">
+                        <img class="five" src="Imagenes/fiverr.png" alt="Fiverr">
+                        <h4>Fiverr</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mens">
+            <!-- CORREGIDO: Se eliminó atributo "turo" mal colocado en el span -->
+            <h1 class="mensaje">Hola, soy <span class="destacado-nombre">Franyer Torres</span> y te invito a desarrollar juntos un nuevo Futuro</h1>
+        </div>
+    </section>
+
+    <!-- SECCIÓN MURO -->
+    <section class="muro">
+        <!-- COLUMNA IZQUIERDA: Filosofía y Objetivos -->
+        <div class="muro-col-izquierda">
+            <div class="frase">
+                <h4 id="fraseH">Filosofía De Trabajo</h4>
+                <p id="fraseP">El código no solo debe funcionar; debe ser mantenible, seguro y responder directamente a la lógica de negocio de la empresa.</p>
+            </div>
+
+            <div class="obj">
+                <h4>Objetivos</h4>
+                <ol class="obje">
+                    <li>Desarrollar en tiempo RECORD</li>
+                    <li>Mantener la Seguridad para cada proyecto</li>
+                    <li>Siempre tomar en cuenta el modelo de Negocio</li>
+                    <li>Aumentar las finanzas para TODAS las Empresas</li>
+                    <li>Eficiencia por encima de la EFICACIA</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- COLUMNA DERECHA: Gráficos de Habilidades -->
+        <div class="muro-col-derecha">
+            <h4 class="titulo-habilidades">Habilidades & Nivel de Dominio</h4>
+
+            <div class="charts-container">
+                <!-- GRÁFICO 1: Habilidades Técnicas -->
+                <div class="chart-card">
+                    <h4>Técnicas Principales</h4>
+                    <div class="donut-chart chart-tecnicas">
+                        <div class="donut-center">
+                            <span class="donut-label">Full-Stack</span>
+                            <span class="donut-label">& IA</span>
+                        </div>
+                    </div>
+                    <ul class="chart-legend">
+                        <li><span class="dot dot-1"></span> Full-Stack & Móvil <span class="legend-pct">95%</span></li>
+                        <li><span class="dot dot-2"></span> Auditoría & Calidad <span class="legend-pct">90%</span></li>
+                        <li><span class="dot dot-3"></span> Arquitectura & Docker <span class="legend-pct">85%</span></li>
+                        <li><span class="dot dot-4"></span> IA Generativa <span class="legend-pct">80%</span></li>
+                    </ul>
+                </div>
+
+                <!-- GRÁFICO 2: Fortalezas Metodológicas -->
+                <div class="chart-card">
+                    <h4>Fortalezas Metodológicas</h4>
+                    <div class="donut-chart chart-metodologias">
+                        <div class="donut-center">
+                            <span class="donut-label">Ingeniería</span>
+                            <span class="donut-label">Práctica</span>
+                        </div>
+                    </div>
+                    <ul class="chart-legend">
+                        <li><span class="dot dot-1"></span> Autonomía Práctica <span class="legend-pct">98%</span></li>
+                        <li><span class="dot dot-2"></span> Atención al Detalle <span class="legend-pct">92%</span></li>
+                        <li><span class="dot dot-3"></span> Sistemas Escalables <span class="legend-pct">88%</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DE LENGUAJES Y HABILIDADES EN DESARROLLO -->
+    <!-- CORREGIDO: Encerrado dentro de un <section> para mantener coherencia de layout -->
+    <section class="muro-tech-wrapper">
+        <div class="muro-tech-row">
+            <!-- BLOQUE IZQUIERDO: LENGUAJES QUE DOMINAS -->
+            <div class="tech-card muro-col-izquierda">
+                <h4 class="titulo-tech">Lenguajes</h4>
+                <div class="tech-grid">
+                    <div class="tech-item" title="C">
+                        <img src="Imagenes/lenguajes/c.png" alt="C">
+                    </div>
+                    <div class="tech-item" title="CSS3">
+                        <img src="Imagenes/lenguajes/css3.png" alt="CSS3">
+                    </div>
+                    <div class="tech-item" title="HTML5">
+                        <img src="Imagenes/lenguajes/html.png" alt="HTML5">
+                    </div>
+                    <div class="tech-item" title="Java">
+                        <img src="Imagenes/lenguajes/java.png" alt="Java">
+                    </div>
+                    <div class="tech-item" title="JavaScript">
+                        <img src="Imagenes/lenguajes/javascript.png" alt="JavaScript">
+                    </div>
+                    <div class="tech-item" title="PostgreSQL">
+                        <img src="Imagenes/lenguajes/postgresql.png" alt="PostgreSQL">
+                    </div>
+                    <div class="tech-item" title="Python">
+                        <img src="Imagenes/lenguajes/python.png" alt="Python">
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOQUE DERECHO: HABILIDADES EN DESARROLLO -->
+            <div class="tech-card muro-col-derecha">
+                <h4 class="titulo-tech">Habilidades En Desarrollo</h4>
+                <div class="tech-dev-container">
+                    <div class="tech-item tech-dev-item" title="PHP">
+                        <img src="Imagenes/lenguajes/php.jpg" alt="PHP">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DESARROLLO (VISTA PRINCIPAL) -->
+    <section class="seccion-desarrollo" id="vistaDesarrollo">
+        <h4 class="titulo-desarrollo-centro">Desarrollo</h4>
+    
+        <div class="desarrollo-grid">
+            <!-- Cuadro 1: Páginas Web -->
+            <div class="card-desarrollo" onclick="cargarProyecto('web')">
+                <div class="card-content">
+                    <h3>Páginas Web</h3>
+                    <p class="card-desc">Proyectos web interactivos, responsivos y optimizados.</p>
+                </div>
+            </div>
+
+            <!-- Cuadro 2: Automatizaciones (Centrado) -->
+            <div class="card-desarrollo card-centro" onclick="cargarProyecto('auto')">
+                <div class="card-content">
+                    <h3>Automatizaciones</h3>
+                    <p class="card-desc">Scripts y herramientas para optimización de procesos y tareas backend.</p>
+                </div>
+            </div>
+
+            <!-- Cuadro 3: Apps Móviles -->
+            <div class="card-desarrollo" onclick="cargarProyecto('apps')">
+                <div class="card-content">
+                    <h3>Apps Móviles</h3>
+                    <p class="card-desc">Aplicaciones móviles funcionales y proyectos multiplataforma.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VISTA INTERNA DE PROYECTOS (SE CARGA AL HACER CLIC) -->
+    <section class="vista-proyecto-detalle" id="vistaProyecto" style="display: none;">
+        <!-- Botón de Volver (Estética idéntica a Sobre Mí) -->
+        <button id="btnVolverInicio" class="btn-toggle-sobremi btn-volver" onclick="volverAInicio()">Volver al Inicio</button>
+
+        <div class="contenedor-proyecto-inner">
+            <h2 id="tituloProyectoDetalle" class="titulo-proyecto-head">Detalle del Proyecto</h2>
+        
+            <!-- Contenedor del Video de Referencia -->
+            <div class="video-container">
+                <video id="videoProyecto" controls playsinline preload="metadata">
+                    <source id="sourceVideo" src="" type="video/mp4"> Tu navegador no soporta la reproducción de video HTML5.
+                </video>
+            </div>
+
+            <!-- Enlace a GitHub -->
+            <div class="github-link-container">
+                <a id="linkGithubProyecto" href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn-github-link">
+                Ver Código en GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+    <script src="js/space.js"></script>
+    <script src="js/panel.js"></script>
+</body>
+</html>
