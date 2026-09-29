@@ -1,26 +1,24 @@
+// js/space.js - Fondo de Partículas Interactivo en Modo Claro
+
 const canvas = document.getElementById('spaceCanvas');
 const ctx = canvas.getContext('2d');
 
 let particlesArray = [];
-const numberOfParticles = 80;
+const numberOfParticles = 140;
 
-// Ajustar resolución del canvas a la pantalla
-function setCanvasSize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-setCanvasSize();
+// Colores seleccionados: Azul Cobalto e Índigo / Verde Esmeralda Menta
+const particleColors = ['#00f0ff', '#38bdf8', '#0284c7', '#7dd3fc'];
 
-// Coordenadas del ratón
+// Posición del cursor
 const mouse = {
     x: null,
     y: null,
     radius: 120
 };
 
-window.addEventListener('mousemove', (e) => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
+window.addEventListener('mousemove', (event) => {
+    mouse.x = event.x;
+    mouse.y = event.y;
 });
 
 window.addEventListener('mouseleave', () => {
@@ -28,86 +26,105 @@ window.addEventListener('mouseleave', () => {
     mouse.y = null;
 });
 
-window.addEventListener('resize', () => {
-    setCanvasSize();
-    initParticles();
-});
+// Ajuste del tamaño del canvas al redimensionar ventana
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
 
-// Clase Partícula (Materia Espacial)
+// Clase Partícula
 class Particle {
     constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2.5 + 0.5;
-        this.speedX = (Math.random() - 0.5) * 0.6;
-        this.speedY = (Math.random() - 0.5) * 0.6;
-        // Paleta alternada entre Azul Rey y Rojo Vino
-        this.color = Math.random() > 0.5 ? '#1a6eff' : '#ba0c2f';
-    }
-
-    update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        // Rebotar en los bordes
-        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-
-        // Interacción con el ratón (Repulsión/Materia en movimiento)
-        if (mouse.x !== null && mouse.y !== null) {
-            let dx = mouse.x - this.x;
-            let dy = mouse.y - this.y;
-            let distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < mouse.radius) {
-                const force = (mouse.radius - distance) / mouse.radius;
-                const directionX = dx / distance;
-                const directionY = dy / distance;
-
-                this.x -= directionX * force * 5;
-                this.y -= directionY * force * 5;
-            }
-        }
+        this.size = Math.random() * 3 + 2;
+        this.baseX = this.x;
+        this.baseY = this.y;
+        this.speedX = (Math.random() - 0.5) * 1.2;
+        this.speedY = (Math.random() - 0.5) * 1.2;
+        this.color = particleColors[Math.floor(Math.random() * particleColors.length)];
     }
 
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fillStyle = this.color;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = this.color;
+        ctx.globalAlpha = 0.55;
         ctx.fill();
-        ctx.shadowBlur = 0; // Limpiar sombra para rendimiento
+    }
+
+    update() {
+        // Movimiento flotante constante
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        // Rebote en los bordes
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+
+        // Repulsión sutil con el cursor del ratón
+        if (mouse.x != null && mouse.y != null) {
+            let dx = mouse.x - this.x;
+            let dy = mouse.y - this.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < mouse.radius) {
+                const forceDirectionX = dx / distance;
+                const forceDirectionY = dy / distance;
+                const maxDistance = mouse.radius;
+                const force = (maxDistance - distance) / maxDistance;
+                const directionX = forceDirectionX * force * 3;
+                const directionY = forceDirectionY * force * 3;
+
+                this.x -= directionX;
+                this.y -= directionY;
+            }
+        }
+
+        this.draw();
     }
 }
 
-// Inicializar partículas
-function initParticles() {
+// Inicialización de partículas
+function init() {
     particlesArray = [];
     for (let i = 0; i < numberOfParticles; i++) {
         particlesArray.push(new Particle());
     }
 }
 
-// Animación continua
+// Conexión sutil con líneas entre partículas cercanas
+function connect() {
+    for (let a = 0; a < particlesArray.length; a++) {
+        for (let b = a; b < particlesArray.length; b++) {
+            let dx = particlesArray[a].x - particlesArray[b].x;
+            let dy = particlesArray[a].y - particlesArray[b].y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 130) {
+                ctx.beginPath();
+                ctx.strokeStyle = particlesArray[a].color;
+                ctx.globalAlpha = (1 - distance / 110) * 0.15;
+                ctx.lineWidth = 1;
+                ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                ctx.stroke();
+            }
+        }
+    }
+}
+
+// Bucle de animación
 function animate() {
-    // Gradiente Espacial de Fondo (Azul Rey a Rojo Vino)
-    let gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-    gradient.addColorStop(0, '#030814');
-    gradient.addColorStop(0.5, '#081738');
-    gradient.addColorStop(1, '#2b040d');
-
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Dibujar y actualizar materia
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (let i = 0; i < particlesArray.length; i++) {
         particlesArray[i].update();
-        particlesArray[i].draw();
     }
-
+    connect();
     requestAnimationFrame(animate);
 }
 
-initParticles();
+init();
 animate();

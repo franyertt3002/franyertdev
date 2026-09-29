@@ -1,21 +1,49 @@
-/* ==========================================================================
-   1. RESET BÁSICO Y CANVA DE ESPACIO
-   ========================================================================== */
+/* ==========================================================
+   1. VARIABLES GLOBALES Y RESET
+   ========================================================== */
+:root {
+    --bg-light: #030712; 
+
+    /* Transparencia cristalina real para ver las partículas detrás */
+    --card-bg: rgba(10, 20, 35, 0.18);
+    --subcard-bg: rgba(15, 28, 48, 0.25);
+
+    /* Bordes y resplandores en neón cian brillante */
+    --card-border: #00d9ff;
+    --subcard-border: rgba(0, 217, 255, 0.4);
+
+    /* Sin sombras pesadas */
+    --card-shadow: none;
+
+    /* Textos principales e insignias en blanco puro y neón */
+    --text-primary: #ffffff;
+    --text-secondary: #e2e8f0;
+    --accent-blue: #00bfff;
+    --accent-green: #00d9ff;
+    --green-available: #00d9ff;
+    --radius-main: 20px;
+    --radius-sub: 14px;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    color: #ffffff;
-    background-color: #030511; /* Fondo espacial profundo */
+    margin: 0;
+    padding: 0;
     min-height: 100vh;
-    overflow-x: hidden;
+    background-color: var(--bg-light); /* Asigna el fondo oscuro */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
 }
 
-/* Canvas fijo al fondo sin interferir con clics */
+/* Canvas de partículas al fondo */
 #spaceCanvas {
     position: fixed;
     top: 0;
@@ -26,817 +54,911 @@ body {
     pointer-events: none;
 }
 
-/* ==================================================
-   2. SECCIÓN INICIO 
-   ================================================== */
-.inicio {
-    position: relative;
-    width: 90%;
-    max-width: 1200px;
-    height: 35vh;
-    min-height: 250px;
-    margin: 20px auto;
+/* ==========================================================
+   2. ESTRUCTURA PRINCIPAL (GRID ESCRITORIO)
+   ========================================================== */
+.grid-container {
+    display: grid;
+    /* 4 columnas de ancho proporcional equilibrado */
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 16px; 
     
-    /* Imagen de fondo horizontal */
-    background-image: url("../Imagenes/fondo.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    
-    border-radius: 12px;
+    /* Proporciones de pantalla */
+    width: 92vw;           /* Ocupa el 92% del ancho de la pantalla */
+    max-width: 1280px;     /* Límite máximo para monitores muy grandes */
+    margin: 20px auto;     /* Margen de respaldo */
+    box-sizing: border-box;
+}
+
+/* Tarjetas Base (Glassmorphism) */
+.card {
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--card-bg) !important;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid var(--card-border) !important;/* Borde fijado exactamente a 1px */
+    color: var(--text-primary) !important; 
+    border-radius: var(--radius-main);
+    box-shadow: none; /* Eliminamos el box-shadow */
+    padding: 24px;
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease;
+}
+
+/* Textos globales en blanco brillante */
+.card h2, 
+.card h3, 
+.card p, 
+.card li,
+.card span,
+.card-title, 
+.card-title-center {
+    color: #ffffff !important;
+}
+
+/* Desactivamos la sombra al pasar el cursor para mantener el estilo limpio */
+.card:hover {
+    box-shadow: none;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+.card-title-center {
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+/* ==========================================================
+   3. ESTILOS POR TARJETA
+   ========================================================== */
+/* Importación de fuente elegante y llamativa para la descripción */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+/* CUADRO 1: Junior Developer */
+.card-perfil {
+    grid-column: span 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center; /* Centra todo el contenido por defecto */
+}
+
+.perfil-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+/* Título principal centrado */
+.card-title-center {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    text-align: center;
+    margin: 0;
+}
+
+/* Badge "Junior Developer" Centrado */
+.badge-role {
+    display: inline-block;
+    align-self: center; /* Fuerza el centrado horizontal */
+    background: rgba(0, 191, 255, 0.15) !important;
+    color: #00bfff !important;
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 6px 16px;
+    border-radius: 20px;
+    letter-spacing: 0.8px;
+    border: 1px solid #00bfff !important;
+}
+
+/* Descripción con tipografía llamativa y elegante */
+.descripcion-personal {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.93rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    text-align: center;
+    margin-bottom: 18px;
+    letter-spacing: -0.1px;
+}
+
+/* Contenedor de Redes Sociales */
+.social-container {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.group-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    display: block;
+    text-align: center;
+}
+
+.buttons-row {
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.btn-social {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #ffffff !important;
+    backdrop-filter: blur(4px);
+    font-size: 0.82rem;
+    font-weight: 600;
+    background: rgba(15, 23, 42, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-social span {
+    color: #ffffff !important;
+}
+
+.btn-social:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.btn-social img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    border-radius: 3px;
+}
+
+/* CUADRO 2: Imagen Principal */
+.card-foto {
+    grid-column: span 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Centra todo el bloque verticalmente */
+    padding: 20px;
+    gap: 12px; /* Mantiene la distancia justa entre la imagen y el estado */
+}
+
+.img-wrapper {
+    width: 100%;
+    max-width: 260px; /* Ancho cómodo alineado con el botón */
+    height: 220px;
+    border-radius: var(--radius-sub);
     overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* BOTÓN Y PANEL DESPLEGABLE SOBRE MÍ (Animación Simétrica desde el Botón)*/
-.btn-toggle-sobremi {
-    position: absolute;
-    top: 15px;
-    left: 20px;
-    z-index: 15;
-    background-color: #434759;
-    color: #ffffff;
-    border: none;
-    padding: 8px 18px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+.foto-perfil {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
 }
 
-.btn-toggle-sobremi:hover {
-    background-color: #820A25;
-}
-
-.sobreMi {
-    position: fixed;
-    /* 1. Posición inicial ligada a las coordenadas del botón */
-    top: 15px;
-    left: 20px;
-    width: 90%;
-    max-width: 500px;
-    max-height: 80vh;
-    background-color: #434759;
-    padding: 24px;
+.status-disponible {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 16px; /* Espaciado interno para evitar que toque bordes */
+    border: 1px solid var(--card-border);
     border-radius: 12px;
-    box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.85);
-    overflow-y: auto;
-    z-index: 1000;
-    
-    /* 2. Punto de origen fijado exactamente en la esquina del botón */
-    transform-origin: top left;
-    
-    /* ESTADO CERRADO:
-       Sin traslación al centro y contraído a escala 0.01 sobre el propio botón. */
-    opacity: 0;
-    visibility: hidden;
-    transform: translate(0, 0) scale(0.01);
-    pointer-events: none;
-    
-    /* TRANSICIÓN SIMÉTRICA FLUÍDA:
-       Calcula el trayecto exacto de ida y retorno sin sobresaltos ni cambios de tamaño. */
-    transition: 
-        transform 0.75s cubic-bezier(0.25, 1, 0.5, 1),
-        opacity 0.45s ease-in-out,
-        visibility 0.75s;
+    background: rgba(0, 191, 255, 0.15) !important;
+    border: 1px solid #00bfff !important;
+    color: #00bfff !important;
+    width: fit-content;
+    margin: 12px auto 0 auto;
 }
 
-.sobreMi.activo {
-    /* ESTADO ABIERTO:
-       Calcula la traslación desde (15px, 20px) hacia el centro relativo de la pantalla 
-       manteniendo la escala normal (scale 1). */
-    opacity: 1;
-    visibility: visible;
-    transform: translate(calc(50vw - 50% - 20px), calc(50vh - 50% - 15px)) scale(1);
-    pointer-events: auto;
+.status-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #00d9ff !important;
+    box-shadow: 0 0 8px #00d9ff;
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent-green);
 }
 
-/* Transición limpia para el contenido interno */
-.sobreMi > * {
-    transition: opacity 0.35s ease 0.25s;
-}
-
-.sobreMi:not(.activo) > * {
-    opacity: 0;
-}
-
-.sobreMi h2 {
-    font-size: 1.2rem;
-    color: #FFFFFF;
+.status-text {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #00bfff !important;
     text-align: center;
-    margin: 12px 0;
+    line-height: 1.2;
 }
 
-.card-hobby {
+/* CUADRO 3: Proyectos & Sub-cuadros */
+.card-proyectos {
+    grid-column: span 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Incrementa este valor (ej. 20px o 24px) para separar el título de la grilla */
+}
+
+.proyectos-subgrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    height: 100%;
+}
+
+.subcard {
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: var(--radius-sub);
+    padding: 16px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.subcard h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    pointer-events: none;
+}
+
+/* Animaciones Específicas en Hover para Sub-cuadros */
+
+/* --- 1. SUPERIOR IZQUIERDO: AUTOMATIZACIÓN --- */
+.sub-auto {
     position: relative;
-    background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 6px;
-    padding: 12px;
-    margin-bottom: 12px;
-    overflow: hidden;
 }
 
-.card-hobby p {
+.sub-auto .subcard-bg {
+    position: absolute;
+    inset: 0;
+    background: url('../Imagenes/fondoa.png') center/cover no-repeat;
+    opacity: 0.25; /* Transparencia de la imagen */
+    border-radius: var(--radius-sub);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+}
+
+/* Al pasar el cursor, solo gira la figura/fondo, el texto no se mueve */
+.sub-auto:hover .subcard-bg {
+    transform: rotate(360deg);
+}
+
+
+/* --- 2. SUPERIOR DERECHO: APPS MÓVILES --- */
+.sub-apps {
+    position: relative;
+    overflow: hidden;
+    transition: border-radius 0.4s ease, background 0.4s ease, border-color 0.4s ease;
+}
+
+/* Imagen de fondo semitransparente usando apps.png */
+.sub-apps .subcard-bg {
+    position: absolute;
+    inset: 0;
+    background: url('../Imagenes/apps.png') center/cover no-repeat;
+    opacity: 0.25; /* Misma transparencia que las otras tarjetas */
+    transition: opacity 0.4s ease;
+    z-index: 1;
+}
+
+/* Asegurar que el texto quede por encima de la imagen */
+.sub-apps .subcard-text,
+.sub-apps h3 {
     position: relative;
     z-index: 2;
-    text-align: center;
-    font-size: 0.9rem;
-    line-height: 1.4;
 }
 
-.bg-card-img {
+/* AL PASAR EL CURSOR: Se oculta la imagen y se activa la forma y el color rojo */
+.sub-apps:hover .subcard-bg {
+    opacity: 0; /* Oculta la imagen completamente al hacer hover */
+}
+
+.sub-apps:hover {
+    /* Forma estilizada de manzana */
+    border-radius: 40% 40% 50% 50% / 35% 35% 60% 60%;
+    /* Fondo rojo semi-transparente y borde rojo */
+    background: rgba(220, 38, 38, 0.75) !important;
+    border-color: #ef4444 !important;
+}
+
+.sub-apps:hover .subcard-text,
+.sub-apps:hover h3 {
+    color: #ffffff; /* Texto en blanco para buen contraste sobre fondo rojo */
+}
+
+
+/* --- 3. INFERIOR IZQUIERDO: BASE DE DATOS (EFECTO TILT 3D) --- */
+.sub-db {
+    background-image: linear-gradient(rgba(10, 20, 35, 0.55), rgba(10, 20, 35, 0.55)), url('../Imagenes/base.png') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    /* Transición suave para cuando el ratón entra y sale */
+    transition: transform 0.1s ease-out, box-shadow 0.2s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+/* --- 4. INFERIOR DERECHO: PÁGINAS WEB --- */
+.sub-web {
+    background-image: linear-gradient(rgba(10, 20, 35, 0.55), rgba(10, 20, 35, 0.55)), url('../Imagenes/paginas.png') !important;
+    background-size: cover !important;
+    background-position: center !important;
+}
+.sub-web:hover {
+    animation: baileReloj 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes baileReloj {
+    0% { transform: rotate(-8deg); }
+    100% { transform: rotate(8deg); }
+}
+
+/* CUADRO 4: Conocimientos Adquiridos */
+.card-conocimientos {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinea todo el contenido hacia arriba */
+    align-items: center;
+    padding: 24px 20px;
+    gap: 18px; /* Espacio exacto entre el título y el bloque de logos */
+}
+
+/* Título centrado horizontalmente */
+.card-conocimientos .card-title {
+    width: 100%;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0;
+}
+
+/* Grilla de logos subida y agrupada justo debajo del título */
+.tech-logos-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    margin-top: 0; /* Asegura que no haya empuje hacia abajo */
+}
+
+.tech-logos-grid img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+}
+
+.tech-logos-grid img:hover {
+    transform: translateY(-3px);
+}
+
+/* CUADRO 5: Filosofía de Trabajo */
+.card-filosofia,
+.card:has(.filosofia-quote) {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Sube todo el contenido hacia arriba */
+    align-items: center;
+    padding: 24px 20px;
+    gap: 18px; /* Espacio limpio entre título y frase */
+}
+
+/* Título centrado horizontalmente */
+.card-filosofia .card-title,
+.card-filosofia h2,
+.card-filosofia h3 {
+    width: 100%;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0;
+}
+
+/* Estilo del texto adaptado al de la descripción personal */
+.filosofia-quote,
+.card-filosofia blockquote,
+.card-filosofia p {
+    margin: 0;
+    padding: 8px 0 8px 16px;
+    border-left: 4px solid #2563eb; /* Línea vertical decorativa azul */
+    text-align: center;            /* Centrado del texto */
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #334155;
+    font-style: italic;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* CUADRO 6: Acerca de Mí (RULETA 3D & FONDO TRANSPARENTE)*/
+.card-acerca {
+    grid-column: span 2; /* Ocupa el ancho equivalente a 2 cuadros */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 24px 24px;
+    gap: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center !important;
+}
+
+.card-acerca .card-title {
+    width: 100%;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0;
+}
+
+/* Envoltorio del Carrusel 3D */
+.carousel-3d-wrapper {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    perspective: 1000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-3d-container {
+    overflow: hidden !important;
+    position: relative;
+    width: 90%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+/* Estilo base de cada tarjeta (superpuestas con position: absolute) */
+.carousel-card {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    opacity: 0.15;
-    z-index: 1;
-    pointer-events: none;
-}
-
-/* COMPOSICIÓN DE IMAGEN DERECHA (Sin yo0) */
-#yo {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 385px;
-    height: 150%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    z-index: 5;
+    border-radius: 16px;
+    background-color: rgba(10, 20, 35, 0.85) !important;
+    border: 1px solid rgba(0, 217, 255, 0.3) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
     overflow: hidden;
-}
-
-.yo {
-    position: absolute;
-    bottom: 0;
-    left: 60%;
-    transform: translateX(-50%); 
-    width: 80%;                  
-    height: auto;
-    max-height: 90%;
-    object-fit: cover;
-    z-index: 20;
-}
-
-/* REDES Y CONTRATACIÓN (Óvalos con colores temáticos y texto visible) */
-.bottom-left-group {
-    position: absolute;
-    bottom: 15px;
-    left: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    z-index: 25;
-}
-
-.redesSociales, .cont {
-    display: flex;
-    gap: 12px;
-}
-
-.social-btn {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(60px) rotateX(-20px) scale(0.85);
+    transition: opacity 0 ease, transform 0.3s ease;
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 6px 16px 6px 8px; /* Formato de óvalo prolongado */
-    border-radius: 30px;       /* Forma ovalada limpia */
-    text-decoration: none;
-    color: #ffffff;
-    max-width: none;           /* Desbloquea el ancho estático */
-    transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    justify-content: center;
+    padding: 20px 28px;
+    box-sizing: border-box;
 }
 
-/* Iconos más grandes */
-.social-btn img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    object-fit: cover;
-    flex-shrink: 0;
+.carousel-card:not(.active) {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
 }
 
-/* El h4 se muestra siempre expuesto */
-.social-btn h4 {
-    font-size: 0.88rem;
-    font-weight: 600;
-    white-space: nowrap;
-    opacity: 1;
+.carousel-card.active {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    visibility: visible !important;
+}
+
+/* Imagen de fondo semitransparente dentro de la tarjeta */
+.carousel-card .card-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.22; /* Permite apreciar la imagen sin opacar las letras */
+    z-index: 1;
+}
+
+/* Texto centrado e integrado */
+.carousel-card .card-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #334155;
+    font-weight: 500;
+}
+
+.carousel-card .card-content p {
     margin: 0;
 }
 
-/* --- COLORES TEMÁTICOS PARA CADA MARCA --- */
-/* Instagram: Degradado Magenta/Naranja */
-.social-btn.inst {
-    background: linear-gradient(45deg, #833ab4, #fd1d1d, #fcb045);
-}
-
-/* TikTok: Oscuro con borde cyan/pink sutil */
-.social-btn.tik {
-    background-color: #010101;
-    border-color: rgba(254, 44, 85, 0.5);
-}
-
-/* Gmail: Rojo representativo */
-.social-btn.gma {
-    background: linear-gradient(135deg, #ea4335, #c5221f);
-}
-
-/* Fiverr: Verde oficial de marca */
-.social-btn.fiv {
-    background-color: #1dbf73;
-}
-
-/* EFECTO HOVER: Elevación y brillo sutil */
-.social-btn:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.15);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-/* MENSAJE PRINCIPAL CENTRADO */
-.mens {
-    position: absolute;
-    top: 35%;
-    left: 40%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    width: 60%; /* Evita que choque con el botón/redes a la izquierda y la imagen a la derecha */
-    max-width: 650px;
-    text-align: center;
-    pointer-events: none; /* Asegura que no bloquee interacciones detrás */
-}
-
-.mensaje {
-    font-size: 1.25rem;
-    font-weight: 600;
-    line-height: 1.4;
-    color: #ffffff;
-    text-shadow: 0px 2px 8px rgba(0, 0, 0, 0.8);
-}
-
-/* Resaltado para el nombre en Vinotinto */
-.destacado-nombre {
-    color: #820A25; /* Tono vinotinto coincidente con la paleta hover */
-    font-weight: 700;
-}
-
-/* Ajuste dinámico para pantallas pequeñas */
-@media (max-width: 768px) {
-    .mens {
-        width: 80%;
-        top: 45%;
-    }
-    .mensaje {
-        font-size: 1rem;
-    }
-}
-
-
-/* ==========================================================================
-   3. SECCIÓN MURO (Estructura de 2 Columnas y Gráficos Visuales)
-   ========================================================================== */
-.muro {
-    width: 90%;
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px 0;
-    
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: start;
-}
-
-/* UNIFICACIÓN DE COLOR: Todos los h4 de la sección Muro en Rojo Vinotinto */
-.muro h4,
-.muro h2,
-.muro h3,
-.muro h5 {
-    color: #820A25 !important; /* Tono vinotinto coincidente con 'Franyer Torres' */
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin-bottom: 12px;
-}
-
-.titulo-habilidades {
-    text-align: center;
-    margin-bottom: 20px !important;
-}
-
-/* Columna Izquierda */
-.frase, .obj {
-    width: 100%;
-}
-
-.muro p {
-    text-align: left;
-    padding-left: 20px;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    margin-bottom: 25px;
-}
-
-.obje {
-    column-count: 2; 
-    column-gap: 20px;
-    padding-left: 30px;
-}
-
-.obje li {
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-    break-inside: avoid;
-}
-
-/* --- COLUMNA DERECHA: TARJETAS DE GRÁFICOS --- */
-.muro-col-derecha {
-    background-color: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 20px;
-}
-
-.charts-container {
-    display: flex;
-    gap: 20px;
-    justify-content: space-between;
-}
-
-.chart-card {
-    flex: 1;
-    background: rgba(0, 0, 0, 0.25);
-    border-radius: 8px;
-    padding: 15px;
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.chart-card h4 {
-    font-size: 1rem !important;
-    margin-bottom: 15px !important;
-}
-
-/* Base del Gráfico de Dona */
-.donut-chart {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 15px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Segmentos Gráfico 1: Habilidades Técnicas */
-.chart-tecnicas {
-    background: conic-gradient(
-        #e63946 0% 32%,    /* Full-Stack & Móvil (Predominante) */
-        #1d3557 32% 60%,   /* Auditoría & Calidad SQL/Code */
-        #00b4d8 60% 82%,   /* Arquitectura, Caddy & Docker */
-        #b71c1c 82% 100%   /* IA Generativa & Automatización */
-    );
-}
-
-/* Segmentos Gráfico 2: Fortalezas Metodológicas */
-.chart-metodologias {
-    background: conic-gradient(
-        #d90429 0% 42%,    /* Autonomía Práctica (Pilar principal) */
-        #0077b6 42% 75%,   /* Atención al Detalle / Quality Control */
-        #90e0ef 75% 100%   /* Arquitectura de Sistemas Escalables */
-    );
-}
-
-/* Centro Oscuro */
-.donut-center {
-    width: 72px;
-    height: 72px;
-    background-color: #081738;
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
-}
-
-.donut-label {
-    font-size: 0.72rem;
-    color: #ffffff;
-    font-weight: 600;
-    line-height: 1.2;
-}
-
-/* Leyenda e Integración de Porcentajes */
-.chart-legend {
-    list-style: none;
-    padding: 0;
-    text-align: left;
-}
-
-.chart-legend li {
-    font-size: 0.8rem;
-    color: #dddddd;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.legend-pct {
-    margin-left: auto;
-    font-weight: 800;
-    color: #4cc9f0; /* Color cyan destacado para denotar alto rendimiento */
-    font-size: 0.82rem;
-}
-
-/* Puntos de color para las leyendas */
-.dot {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    display: inline-block;
-    flex-shrink: 0;
-}
-
-/* Colores de los puntos - Gráfico 1 */
-.chart-tecnicas + .chart-legend .dot-1 { background-color: #e63946; }
-.chart-tecnicas + .chart-legend .dot-2 { background-color: #1d3557; }
-.chart-tecnicas + .chart-legend .dot-3 { background-color: #00b4d8; }
-.chart-tecnicas + .chart-legend .dot-4 { background-color: #b71c1c; }
-
-/* Colores de los puntos - Gráfico 2 */
-.chart-metodologias + .chart-legend .dot-1 { background-color: #d90429; }
-.chart-metodologias + .chart-legend .dot-2 { background-color: #0077b6; }
-.chart-metodologias + .chart-legend .dot-3 { background-color: #90e0ef; }
-
-/* ==========================================================================
-   4. SECCIÓN LENGUAJES Y HABILIDADES EN DESARROLLO
-   ========================================================================== */
-
-   /* Wrapper para centrar el bloque de tecnologías con el resto del sitio */
-.muro-tech-wrapper {
-    width: 90%;
-    max-width: 1200px;
-    margin: 20px auto 40px auto;
-}
-
-/* Contenedor principal alineado con las columnas de tu diseño */
-.muro-tech-row {
-    display: flex;
-    gap: 40px; /* Sincronizado con el gap de .muro */
-    width: 100%;
-    box-sizing: border-box;
-}
-
-/* Tarjeta contenedora con la misma estética traslúcida */
-.tech-card {
-    flex: 1;
-    background-color: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-sizing: border-box;
-}
-
-/* Títulos centrados en color vinotinto */
-.titulo-tech {
-    color: #b71c1c; /* Vinotinto corporativo */
-    font-size: 1.1rem;
-    font-weight: 700;
-    text-align: center;
-    margin: 0 0 18px 0;
-    width: 100%;
-}
-
-/* Cuadrícula adaptable para los logos principales */
-.tech-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(55px, 1fr));
-    gap: 15px;
-    width: 100%;
-    justify-items: center;
-    align-items: center;
-}
-
-/* Contenedor específico para centrar el logo de PHP */
-.tech-dev-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    flex-grow: 1;
-    padding: 10px 0;
-}
-
-/* Estilo individual de cada contenedor de imagen */
-.tech-item {
-    width: 58px;
-    height: 58px;
-    background: rgba(0, 0, 0, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    padding: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    cursor: pointer;
-    /* Transición suave para la animación de flotado */
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                box-shadow 0.3s ease, 
-                border-color 0.3s ease;
-}
-
-/* Ajuste de la imagen dentro de su contenedor */
-.tech-item img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
-}
-
-/* EFECTO DE MOVIMIENTO / LEVITACIÓN AL PASAR EL CURSOR (HOVER) */
-.tech-item:hover {
-    transform: translateY(-8px) scale(1.08); /* Movimiento hacia arriba con expansión ligera */
-    border-color: #e63946; /* Borde rojo sutil */
-    box-shadow: 0 10px 18px rgba(183, 28, 28, 0.35); /* Resplandor inferior que enfatiza el levitado */
-}
-
-/* Escala un poco mayor para la tarjeta en desarrollo de PHP */
-.tech-dev-item {
-    width: 72px;
-    height: 72px;
-}
-
-/* Ajuste responsivo para pantallas pequeñas */
-@media (max-width: 768px) {
-    .muro-tech-row {
-        flex-direction: column;
-    }
-}
-
-/* ==========================================================================
-   ELIMINACIÓN DE TARJETAS Y FONDOS TRANSPARENTES
-   ========================================================================== */
-
-/* Quitar recuadro transparente en la columna derecha de Habilidades */
-.muro-col-derecha {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-    padding: 0 !important;
-}
-
-/* Quitar recuadros transparentes en las tarjetas internas de gráficos */
-.chart-card {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-}
-
-/* Quitar recuadros transparentes en las dos tarjetas inferiores (Lenguajes y En Desarrollo) */
-.tech-card {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-    padding: 0 !important;
-}
-
-/* ==========================================================================
-   ESTILOS Y ALINEACIÓN DE LOGOS (LENGUAJES)
-   ========================================================================== */
-
-.tech-grid, 
-.tech-dev-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 18px;
-    align-items: center;
-    justify-content: flex-start;
-    margin-top: 15px;
-}
-
-/* Formato circular o cuadrado transparente para los íconos */
-.tech-item {
-    width: 65px;
-    height: 65px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.05); /* Fondo muy sutil o cambiar a transparent */
-    border-radius: 12px;
-    transition: transform 0.3s ease, background 0.3s ease;
-    padding: 10px;
-    box-sizing: border-box;
-}
-
-.tech-item:hover {
-    transform: translateY(-5px) scale(1.08);
-    background: rgba(255, 255, 255, 0.15);
-}
-
-/* Ajuste de la imagen interna para quitar fondos blancos de PNGs si los hay */
-.tech-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    /* Elimina el recuadro blanco de imágenes JPG/PNG no transparentes */
-    mix-blend-mode: lighten; 
-    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.6));
-}
-
-/* ==========================================================================
-   TITULOS DE REDES SOCIALES Y CONTRATACIONES (H6)
-   ========================================================================== */
-
-/* Estilo para los títulos h6 */
-.titulo-seccion-redes {
-    color: #800020; /* Color Vinotinto base */
-    font-size: 0.85rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin: 0 0 8px 4px;
-    /* Resplandor suave en tono vinotinto/carmesí para resaltar sobre el fondo oscuro */
-    text-shadow: 0 0 8px rgba(128, 0, 32, 0.6), 0 0 2px rgba(255, 255, 255, 0.2);
-}
-
-/* Agrupación de los bloques para mantener espaciado vertical ordenado */
-.grupo-redes, 
-.grupo-contratacion {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-}
-
-.grupo-contratacion {
-    margin-bottom: 0;
-}
-
-/* ==========================================================================
-   SECCIÓN DESARROLLO & ANIMACIONES DE TARJETAS
-   ========================================================================== */
-
-.seccion-desarrollo {
-    width: 90%;
-    max-width: 1200px;
-    margin: 50px auto;
-    text-align: center;
-}
-
-.titulo-desarrollo-centro {
-    color: #800020;
-    font-size: 1.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 35px;
-    text-shadow: 0 0 10px rgba(128, 0, 32, 0.6);
-}
-
-.desarrollo-grid {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-/* Tarjetas con bordes redondeados y efecto transparentoso en hover */
-.card-desarrollo {
-    flex: 1;
-    min-width: 250px;
-    height: 180px;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    cursor: pointer;
-    box-sizing: border-box;
-    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    position: relative;
-    overflow: hidden;
-}
-
-/* Animación al posicionar el cursor */
-.card-desarrollo:hover {
-    background: rgba(128, 0, 32, 0.25); /* Tono transparentoso vinotinto */
-    border-color: #800020;
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 10px 25px rgba(128, 0, 32, 0.4);
-}
-
-.card-content h3 {
-    color: #ffffff;
-    font-size: 1.4rem;
-    margin: 0 0 10px 0;
-    transition: color 0.3s ease;
-}
-
-/* Transición suave para la descripción oculta/visible */
-.card-desc {
-    color: #d0d0d0;
-    font-size: 0.9rem;
-    opacity: 0.4;
-    max-height: 40px;
-    transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.card-desarrollo:hover .card-desc {
+/* Posiciones 3D de la Ruleta */
+.carousel-card.active {
     opacity: 1;
-    transform: translateY(-2px);
+    visibility: visible;
+    transform: translateY(0) rotateX(0deg) scale(1);
+    z-index: 10;
 }
 
-.card-desarrollo:hover h3 {
-    color: #ff4d6d;
+.carousel-card.prev {
+    opacity: 0.35;
+    visibility: visible;
+    transform: translateY(-45px) rotateX(15px) scale(0.9);
+    z-index: 5;
 }
 
-/* ==========================================================================
-   VISTA DETALLE DE PROYECTO (INTERFAZ CON VIDEO)
-   ========================================================================== */
+.carousel-card.next {
+    opacity: 0.35;
+    visibility: visible;
+    transform: translateY(45px) rotateX(-15px) scale(0.9);
+    z-index: 5;
+}
 
-.vista-proyecto-detalle {
-    width: 90%;
-    max-width: 1000px;
-    margin: 40px auto;
+/* Flechas laterales derechas */
+.carousel-controls {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 20;
+}
+
+.btn-arrow {
+    background: rgba(10, 20, 35, 0.7) !important;
+    border: 1px solid rgba(0, 217, 255, 0.4) !important;
+    color: #ffffff !important;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+
+.btn-arrow:hover {
+    background: #00bfff !important;
+    color: #ffffff !important;
+    transform: scale(1.1);
+}
+
+/* Adaptación móvil */
+@media (max-width: 768px) {
+    .card-acerca {
+        grid-column: span 1;
+    }
+}
+
+/* CUADRO 7: Objetivos */
+.card-objetivos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 20px;
+    gap: 16px;
+    box-sizing: border-box;
+}
+
+.card-objetivos .card-title {
+    width: 100%;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0;
+}
+
+.objetivos-list {
+    list-style: none; /* Quitamos los números predeterminados */
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Estilo de cada objetivo y su punto circular del tamaño de la letra */
+.objetivos-list li {
     position: relative;
-    animation: fadeInVista 0.5s ease-in-out;
+    font-size: 0.92rem;
+    line-height: 1.4;
+    color: #334155;
+    font-weight: 500;
+    padding-left: 18px; /* Espacio para la viñeta */
+    box-sizing: border-box;
+    transition: transform 0.2s ease;
+}
+
+/* Punto circular del mismo tamaño que la tipografía */
+.objetivos-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.45em; /* Centrado vertical con el texto */
+    width: 0.55em;
+    height: 0.55em;
+    background-color: #2563eb; /* Color azul acorde a los números originales */
+    border-radius: 50%; /* Hace que sea un círculo perfecto */
+}
+
+/* Disposición en Escalera (Intercalada) */
+.objetivos-list li.pos-izq {
+    align-self: flex-start;
+    margin-left: 0;
+    max-width: 85%;
+}
+
+.objetivos-list li.pos-centro {
+    align-self: flex-start;
+    margin-left: 22%; /* Comienza desde la mitad/desplazado hacia el centro */
+    max-width: 78%;
+}
+
+/* Viñetas/puntos del cuadro 'Objetivos' en cian neón */
+.card-objetivos ul li::marker,
+.card-objetivos li {
+    color: #ffffff !important;
+}
+
+.card-objetivos ul li span,
+.card-objetivos .bullet-point {
+    color: #00d9ff !important; /* Punto neón como la imagen de referencia */
+}
+
+/* ==========================================================
+   RESPONSIVE DESIGN (TABLETS Y MÓVILES)
+   ========================================================== */
+
+/* Laptop / Tablets en horizontal (Pantallas medianas) */
+@media (max-width: 1024px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr); /* Pasa a 2 columnas */
+        width: 95vw;
+    }
+    
+    .card-acerca {
+        grid-column: span 2;
+    }
+}
+
+/* Celulares / Pantallas Móviles (Menos de 768px) */
+@media (max-width: 768px) {
+    body {
+        align-items: flex-start; /* En móvil permite hacer scroll vertical cómodo */
+        padding: 16px 0;
+    }
+
+    .grid-container {
+        grid-template-columns: 1fr; /* 1 sola columna para vista móvil */
+        width: 92vw;
+        gap: 14px;
+        margin: 0 auto;
+    }
+
+    /* En móvil todas las tarjetas toman 1 columna completa */
+    .card-acerca,
+    .card-proyectos {
+        grid-column: span 1 !important;
+    }
+}
+
+/* ==========================================================
+   4. VISTA DINÁMICA DE DETALLE (OVERLAY)
+   ========================================================== */
+.overlay-proyecto {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(248, 250, 252, 0.92);
+    backdrop-filter: blur(16px);
+    z-index: 100;
+    display: none;
+    flex-direction: column;
+    padding: 40px 20px;
+    overflow-y: auto;
+}
+
+.overlay-proyecto.active {
+    display: flex;
 }
 
 .btn-volver {
     position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 10;
+    top: 24px;
+    left: 24px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 700;
+    color: var(--text-primary);
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.btn-volver:active, 
-.btn-volver.activo-vinotinto {
-    background-color: #800020 !important;
-    box-shadow: 0 0 12px rgba(128, 0, 32, 0.8);
-}
-
-.contenedor-proyecto-inner {
-    text-align: center;
-    padding-top: 60px;
-}
-
-.titulo-proyecto-head {
+.btn-volver:hover {
+    background: var(--accent-blue);
     color: #ffffff;
-    font-size: 2rem;
-    margin-bottom: 25px;
+    transform: translateX(-3px);
 }
 
-.video-container {
+.contenido-dinamico {
+    max-width: 1000px;
     width: 100%;
-    max-width: 800px;
-    margin: 0 auto 25px auto;
-    border-radius: 15px;
+    margin: 60px auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* SIMULADOR DE CELULAR (Para Apps Móviles) */
+.phone-frame {
+    width: 320px;
+    height: 620px;
+    background: #000000;
+    border-radius: 40px;
+    padding: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    border: 4px solid #333333;
+    position: relative;
     overflow: hidden;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-.video-container video {
+.phone-screen {
     width: 100%;
-    display: block;
+    height: 100%;
+    background: #ffffff;
+    border-radius: 30px;
+    overflow: hidden;
+    position: relative;
 }
 
-.btn-github-link {
-    display: inline-block;
-    padding: 12px 25px;
-    background: transparent;
-    border: 2px solid #800020;
-    color: #ffffff;
-    border-radius: 8px;
-    text-decoration: none;
+.phone-screen iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* GALERÍA / ÁLBUM (Para Base de Datos y Web) */
+.album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+.web-card {
+    background: #ffffff;
+    border-radius: var(--radius-sub);
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.web-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.web-card-info {
+    padding: 16px;
+}
+
+.web-card-info h4 {
+    margin-bottom: 6px;
+    color: var(--text-primary);
+}
+
+.web-card-info p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* ==========================================================
+   5. RESPONSIVE / ADAPTATIVO A MÓVILES
+   ========================================================== */
+@media (max-width: 1024px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .card-acerca {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 650px) {
+    .grid-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* ORDEN REQUERIDO EN MÓVIL:
+       1. Junior Developer
+       2. Foto (Disponible)
+       3. Proyectos
+       4. Conocimientos
+       5. Filosofía
+       6. Objetivos
+       7. Acerca de Mí
+    */
+    .card-perfil { order: 1; }
+    .card-foto { order: 2; }
+    .card-proyectos { order: 3; }
+    .card-conocimientos { order: 4; }
+    .card-filosofia { order: 5; }
+    .card-objetivos { order: 6; }
+    .card-acerca { order: 7; }
+
+    .img-wrapper {
+        width: 130px;
+        height: 130px;
+    }
+}
+
+/* Estructura base interna para sub-cuadros */
+.subcard {
+    background: rgba(15, 23, 42, 0.5) ;
+    border: 1px solid rgba(0, 240, 255, 0.25) ;
+    position: relative;
+    overflow: hidden;
+}
+
+.subcard-text {
+    position: relative;
+    z-index: 2;
+    font-size: 0.9rem;
     font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.btn-github-link:hover {
-    background: #800020;
-    box-shadow: 0 0 15px rgba(128, 0, 32, 0.6);
-}
-
-@keyframes fadeInVista {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
+    color: #ffffff !important;
+    pointer-events: none;
 }

@@ -1,69 +1,174 @@
+// js/panel.js - Navegación Interna para la Sección de Proyectos
+
+function abrirDetalleProyecto(tipo) {
+    const overlay = document.getElementById('overlayProyecto');
+    const contenedor = document.getElementById('contenidoDinamico');
+
+    contenedor.innerHTML = '';
+
+    switch (tipo) {
+        case 'auto':
+            // 1. AUTOMATIZACIONES: Reproductor de video de referencia (YouTube)
+            contenedor.innerHTML = `
+                <h2 style="margin-bottom: 20px; color: var(--text-primary);">Proyectos de Automatizaciones</h2>
+                <div style="width: 100%; max-width: 800px; aspect-ratio: 16/9; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Automatizaciones Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <p style="margin-top: 16px; color: var(--text-secondary); text-align: center;">Demostración en video de scripts y herramientas de optimización backend.</p>
+            `;
+            break;
+
+        case 'apps':
+            // 2. APPS MÓVILES: Simulador de marco de teléfono con Google embebido
+            contenedor.innerHTML = `
+                <h2 style="margin-bottom: 20px; color: var(--text-primary);">Simulador de Aplicaciones Móviles</h2>
+                <div class="phone-frame">
+                    <div class="phone-screen">
+                        <iframe src="https://www.google.com/webhp?igu=1" title="Simulador Google Mobile"></iframe>
+                    </div>
+                </div>
+                <p style="margin-top: 16px; color: var(--text-secondary); text-align: center;">Prueba de interfaz en entorno responsive móvil.</p>
+            `;
+            break;
+
+        case 'db':
+            // 3. BASE DE DATOS: Galería con la imagen de referencia (fondoa.png)
+            contenedor.innerHTML = `
+                <h2 style="margin-bottom: 20px; color: var(--text-primary);">Esquemas de Base de Datos y Auditoría</h2>
+                <div class="album-grid">
+                    <div class="web-card">
+                        <img src="Imagenes/fondoa.png" alt="Esquema Base de Datos" onerror="this.src='https://via.placeholder.com/600x350?text=Esquema+PostgreSQL'">
+                        <div class="web-card-info">
+                            <h4>Arquitectura & Diagnóstico SQL</h4>
+                            <p>Estructura relacional optimizada con triggers y procedimientos para control de calidad.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            break;
+
+        case 'web':
+            // 4. PÁGINAS WEB: Cuadrícula de proyectos desplegados
+            contenedor.innerHTML = `
+                <h2 style="margin-bottom: 20px; color: var(--text-primary);">Proyectos Páginas Web</h2>
+                <div class="album-grid">
+                    <div class="web-card">
+                        <img src="Imagenes/caracas.jpg" alt="Proyecto Web 1">
+                        <div class="web-card-info">
+                            <h4>Plataforma Web Educativa</h4>
+                            <p>Aplicación web full-stack desarrollada con HTML5, CSS3, JS y arquitectura modular.</p>
+                        </div>
+                    </div>
+                    <div class="web-card">
+                        <img src="Imagenes/juego.jpg" alt="Proyecto Web 2">
+                        <div class="web-card-info">
+                            <h4>Panel Interactivo con IA</h4>
+                            <p>Interfaz optimizada para visualización de datos e integración de modelos generativos.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            break;
+    }
+
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Evita scroll secundario
+}
+
+function cerrarDetalleProyecto() {
+    const overlay = document.getElementById('overlayProyecto');
+    overlay.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+// EFECTO TILT 3D PARA EL CUADRO DE BASE DE DATOS
 document.addEventListener('DOMContentLoaded', () => {
-    const btn = document.getElementById('btnSobreMi');
-    const panel = document.getElementById('panelSobreMi');
+    const subDb = document.querySelector('.sub-db');
 
-    if (btn && panel) {
-        // Alternar apertura/cierre al hacer clic en el botón
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            panel.classList.toggle('activo');
+    if (subDb) {
+        subDb.addEventListener('mousemove', (e) => {
+            const rect = subDb.getBoundingClientRect();
+            
+            // Posición del cursor relativa al centro del cuadro (-1 a 1)
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+            // Grados de inclinación (multiplicador para profundidad)
+            const tiltX = y * 25;  // Inclinación en eje X
+            const tiltY = -x * 25; // Inclinación en eje Y
+
+            // Aplica la rotación 3D para hundir la esquina donde está el cursor
+            subDb.style.transform = `perspective(500px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(0.98, 0.98, 0.98)`;
+            subDb.style.boxShadow = `${-x * 10}px ${-y * 10}px 15px rgba(0, 0, 0, 0.12)`;
         });
 
-        // Evitar que los clics dentro del panel lo cierren
-        panel.addEventListener('click', (e) => {
-            e.stopPropagation();
-        });
-
-        // Cerrar el panel al hacer clic en cualquier otra parte de la página
-        document.addEventListener('click', () => {
-            if (panel.classList.contains('activo')) {
-                panel.classList.remove('activo');
-            }
+        subDb.addEventListener('mouseleave', () => {
+            // Regresa a la posición plana original al quitar el cursor
+            subDb.style.transform = 'perspective(500px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+            subDb.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.03)';
         });
     }
 });
 
-// Función para cambiar a la vista de proyectos sin abrir una nueva pestaña
-function cargarProyecto(tipo) {
-    const inicioView = document.getElementById('vistaDesarrollo');
-    const muroView = document.querySelector('.muro');
-    const techView = document.querySelector('.muro-tech-wrapper');
-    const inicioSec = document.querySelector('.inicio');
+// Efecto de ruleta 3D para el apartado de Acerca de Mí
+document.addEventListener('DOMContentLoaded', () => {
+    const wrapper = document.querySelector('.carousel-3d-wrapper');
+    const container = document.getElementById('acercaCarousel');
     
-    const proyectoView = document.getElementById('vistaProyecto');
-    const titulo = document.getElementById('tituloProyectoDetalle');
+    if (!container || !wrapper) return;
 
-    // Asignar título según el cuadro clickeado
-    if (tipo === 'web') titulo.textContent = "Proyectos: Páginas Web";
-    else if (tipo === 'auto') titulo.textContent = "Proyectos: Automatizaciones";
-    else if (tipo === 'apps') titulo.textContent = "Proyectos: Apps Móviles";
+    const cards = Array.from(container.querySelectorAll('.carousel-card'));
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    
+    let currentIndex = 0;
+    let isCoolingDown = false;
 
-    // Ocultar las secciones principales
-    if (inicioSec) inicioSec.style.display = 'none';
-    if (muroView) muroView.style.display = 'none';
-    if (techView) techView.style.display = 'none';
-    if (inicioView) inicioView.style.display = 'none';
+    function updateCarousel() {
+        cards.forEach((card, index) => {
+            card.classList.remove('active', 'prev', 'next');
+            
+            if (index === currentIndex) {
+                card.classList.add('active');
+            } else if (index === (currentIndex - 1 + cards.length) % cards.length) {
+                card.classList.add('prev');
+            } else if (index === (currentIndex + 1) % cards.length) {
+                card.classList.add('next');
+            }
+        });
+    }
 
-    // Mostrar la vista del proyecto
-    proyectoView.style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+    function navigate(direction) {
+        if (isCoolingDown) return;
+        isCoolingDown = true;
 
-// Función para regresar al Inicio cambiando de color el botón a Vinotinto
-function volverAInicio() {
-    const btnVolver = document.getElementById('btnVolverInicio');
-    btnVolver.classList.add('activo-vinotinto');
+        if (direction === 'next') {
+            currentIndex = (currentIndex + 1) % cards.length;
+        } else {
+            currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+        }
 
-    setTimeout(() => {
-        // Restaurar vistas respetando las reglas de la maquetación CSS original
-        document.querySelector('.inicio').style.display = '';
-        document.querySelector('.muro').style.display = '';
-        document.querySelector('.muro-tech-wrapper').style.display = '';
-        document.getElementById('vistaDesarrollo').style.display = '';
-        
-        document.getElementById('vistaProyecto').style.display = 'none';
-        btnVolver.classList.remove('activo-vinotinto');
-        
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 300); // Pequeña pausa para apreciar el cambio de color al hacer clic
-}
+        updateCarousel();
+
+        setTimeout(() => {
+            isCoolingDown = false;
+        }, 300);
+    }
+
+    // Escuchar el scroll dentro de toda la zona del carrusel
+    wrapper.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        if (e.deltaY > 0) {
+            navigate('next');
+        } else {
+            navigate('prev');
+        }
+    }, { passive: false });
+
+    // Asignación de botones solo si existen en el DOM
+    if (btnPrev) btnPrev.addEventListener('click', () => navigate('prev'));
+    if (btnNext) btnNext.addEventListener('click', () => navigate('next'));
+
+    // Inicialización
+    updateCarousel();
+});
