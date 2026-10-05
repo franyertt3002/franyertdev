@@ -481,8 +481,7 @@ body {
 
 /* Título centrado horizontalmente */
 .card-filosofia .card-title,
-.card-filosofia h2,
-.card-filosofia h3 {
+.card-filosofia h2 {
     width: 100%;
     text-align: center;
     font-size: 1.3rem;
@@ -494,7 +493,7 @@ body {
 /* Estilo del texto adaptado al de la descripción personal */
 .filosofia-quote,
 .card-filosofia blockquote,
-.card-filosofia p {
+.card-filosofia  {
     margin: 0;
     padding: 8px 0 8px 16px;
     border-left: 4px solid #2563eb; /* Línea vertical decorativa azul */
@@ -684,15 +683,19 @@ body {
     box-sizing: border-box;
 }
 
-.card-objetivos .card-title {
-    width: 100%;
+/* Unificamos el formato del título para que ambos coincidan exactamente */
+.card-objetivos 
+.card-title, 
+.card-title-center,
+.card h2 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    font-size: 1.3rem !important;
+    font-weight: 800 !important;
+    font-style: normal !important; /* Desactiva itálicas heredadas */
+    color: #ffffff !important;
     text-align: center;
-    font-size: 1.3rem;
-    font-weight: 800;
-    color: #1e293b;
-    margin: 0;
+    margin-bottom: 16px;
 }
-
 .objetivos-list {
     list-style: none; /* Quitamos los números predeterminados */
     padding: 0;
@@ -720,11 +723,13 @@ body {
     content: '';
     position: absolute;
     left: 0;
-    top: 0.45em; /* Centrado vertical con el texto */
-    width: 0.55em;
-    height: 0.55em;
-    background-color: #2563eb; /* Color azul acorde a los números originales */
-    border-radius: 50%; /* Hace que sea un círculo perfecto */
+    top: 0.45em;
+    width: 6px;
+    height: 6px;
+    /* Cambio de color al tono cian/azul neón de Habilidades Técnicas */
+    background-color: var(--accent-blue, #00bfff);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--accent-blue, #00bfff);
 }
 
 /* Disposición en Escalera (Intercalada) */
@@ -961,4 +966,177 @@ body {
     font-weight: 600;
     color: #ffffff !important;
     pointer-events: none;
+}
+
+/* ==========================================================================
+   SECCIÓN HABILIDADES TÉCNICAS - PESTAÑAS TIPO CARPETA RESPONSIVE
+   ========================================================================== */
+
+/* 1. Contenedor Principal: Alineado a la altura de las tarjetas vecinas */
+.card-habilidades {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: rgba(6, 15, 30, 0.65);
+  border: 1px solid rgba(0, 217, 255, 0.4);
+  border-radius: 16px;
+  padding: 16px;
+  backdrop-filter: blur(8px);
+}
+
+.card-habilidades .card-title-center {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+  margin: 0 0 12px 0;
+}
+
+/* 2. Disposición de Pestañas Intercaladas (Estilo Carpeta) */
+.tabs-folder-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.tabs-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+}
+
+/* 3. Pestañas con silueta curva e inclinada (Folder Tab Shape) */
+.tab-folder {
+  flex: 0 1 calc(50% - 5px);
+  padding: 6px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  background: rgba(0, 217, 255, 0.05);
+  border: 1px solid rgba(0, 217, 255, 0.35);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Curvaturas: caída suave hacia el INTERIOR, esquina recta/suave al EXTERIOR */
+.tabs-row .tab-folder:first-child {
+  border-radius: 8px 18px 4px 8px;
+}
+
+.tabs-row .tab-folder:last-child {
+  border-radius: 18px 8px 8px 4px;
+}
+
+/* Estado Hover y Activo con destello */
+.tab-folder:hover,
+.tab-folder.active {
+  background: rgba(0, 217, 255, 0.22);
+  border-color: #00d9ff;
+  color: #ffffff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 10px rgba(0, 217, 255, 0.3);
+  z-index: 2;
+}
+
+/* 4. Cuerpo de Contenido: Ajuste dinámico de texto sin deformar la tarjeta */
+.tabs-body {
+  flex: 1;
+  width: 100%;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+/* 5. Lista de Habilidades y Tipografía Exacta */
+.habilidades-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.habilidades-list li {
+  position: relative;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: #e2e8f0;
+  padding-left: 18px;
+}
+
+.habilidades-list li strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.habilidades-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.4em;
+  width: 6px;
+  height: 6px;
+  background-color: #00d9ff;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #00d9ff;
+}
+
+/* 6. Adaptabilidad Móvil (Responsive breakpoint) */
+@media (max-width: 480px) {
+  .card-habilidades {
+    padding: 12px 8px;
+  }
+
+  .tabs-folder-wrapper {
+    gap: 6px;
+  }
+
+  .tabs-row {
+    gap: 6px;
+  }
+
+  .tab-folder {
+    font-size: 0.70rem;
+    padding: 5px 4px;
+  }
+
+  .habilidades-list li {
+    font-size: 0.78rem;
+    line-height: 1.3;
+  }
+}
+
+/* Scrollbar sutil e integrado */
+.tabs-body::-webkit-scrollbar {
+  width: 3px;
+}
+
+.tabs-body::-webkit-scrollbar-thumb {
+  background: rgba(0, 217, 255, 0.3);
+  border-radius: 3px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
 }

@@ -172,3 +172,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicialización
     updateCarousel();
 });
+
+// INTERACCIÓN DE PESTAÑAS (HABILIDADES TÉCNICAS) POR HOVER
+document.addEventListener('DOMContentLoaded', () => {
+  const tabFolderButtons = document.querySelectorAll('.card-habilidades .tab-folder');
+  const tabPanels = document.querySelectorAll('.card-habilidades .tab-panel');
+
+  if (!tabFolderButtons.length) return;
+
+  tabFolderButtons.forEach(button => {
+    button.addEventListener('mouseenter', () => {
+      const targetTabId = button.getAttribute('data-tab');
+
+      tabFolderButtons.forEach(btn => btn.classList.remove('active'));
+      tabPanels.forEach(panel => panel.classList.remove('active'));
+
+      button.classList.add('active');
+      const targetPanel = document.getElementById(targetTabId);
+      if (targetPanel) {
+        targetPanel.classList.add('active');
+      }
+    });
+  });
+});
