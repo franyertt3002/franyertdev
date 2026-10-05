@@ -666,13 +666,6 @@ body {
     transform: scale(1.1);
 }
 
-/* Adaptación móvil */
-@media (max-width: 768px) {
-    .card-acerca {
-        grid-column: span 1;
-    }
-}
-
 /* CUADRO 7: Objetivos */
 .card-objetivos {
     display: flex;
@@ -754,43 +747,6 @@ body {
 .card-objetivos ul li span,
 .card-objetivos .bullet-point {
     color: #00d9ff !important; /* Punto neón como la imagen de referencia */
-}
-
-/* ==========================================================
-   RESPONSIVE DESIGN (TABLETS Y MÓVILES)
-   ========================================================== */
-
-/* Laptop / Tablets en horizontal (Pantallas medianas) */
-@media (max-width: 1024px) {
-    .grid-container {
-        grid-template-columns: repeat(2, 1fr); /* Pasa a 2 columnas */
-        width: 95vw;
-    }
-    
-    .card-acerca {
-        grid-column: span 2;
-    }
-}
-
-/* Celulares / Pantallas Móviles (Menos de 768px) */
-@media (max-width: 768px) {
-    body {
-        align-items: flex-start; /* En móvil permite hacer scroll vertical cómodo */
-        padding: 16px 0;
-    }
-
-    .grid-container {
-        grid-template-columns: 1fr; /* 1 sola columna para vista móvil */
-        width: 92vw;
-        gap: 14px;
-        margin: 0 auto;
-    }
-
-    /* En móvil todas las tarjetas toman 1 columna completa */
-    .card-acerca,
-    .card-proyectos {
-        grid-column: span 1 !important;
-    }
 }
 
 /* ==========================================================
@@ -1163,83 +1119,6 @@ body {
     
     .card-acerca {
         grid-column: span 2;
-    }
-}
-
-/* Dispositivos Móviles y Pantallas Táctiles (768px o inferior) */
-@media (max-width: 768px) {
-    body {
-        align-items: flex-start;
-        padding: 16px 0;
-    }
-
-    .grid-container {
-        display: flex !important;
-        flex-direction: column !important;
-        width: 92vw;
-        gap: 14px;
-        margin: 0 auto;
-    }
-
-    /* ORDEN JERÁRQUICO ESTRICTO EN MÓVIL */
-    .card-foto { order: 1 !important; }          /* 1. Imagen con "Disponible para trabajar" */
-    .card-perfil { order: 2 !important; }        /* 2. Encabezado Junior Developer */
-    .card-acerca { order: 3 !important; }        /* 3. Acerca de mí (proporciones de celular) */
-    .card-filosofia { order: 4 !important; }     /* 4. Habilidades blandas */
-    .card-conocimientos { order: 5 !important; } /* 5. Lenguajes aprendidos */
-    .card-habilidades { order: 6 !important; }   /* 6. Habilidades Técnicas */
-    .card-proyectos { order: 7 !important; }     /* 7. Proyectos */
-    .card-objetivos { order: 8 !important; }     /* 8. Objetivos (al final) */
-
-    /* Ajuste de proporciones para "Acerca de mí" en móviles */
-    .card-acerca {
-        grid-column: span 1 !important;
-        width: 100%;
-        padding: 16px 12px;
-    }
-
-    .carousel-3d-wrapper {
-        height: 160px;
-    }
-
-    .carousel-card {
-        padding: 14px 18px;
-    }
-
-    .carousel-card .card-content {
-        font-size: 0.85rem;
-        line-height: 1.4;
-    }
-
-    /* Ajuste visual para la foto e insignia */
-    .img-wrapper {
-        width: 140px;
-        height: 140px;
-    }
-}
-
-/* Ajuste fino para pantallas táctiles en miniatura (menores a 480px) */
-@media (max-width: 480px) {
-    .card-habilidades {
-        padding: 12px 8px;
-    }
-
-    .tabs-folder-wrapper {
-        gap: 6px;
-    }
-
-    .tabs-row {
-        gap: 6px;
-    }
-
-    .tab-folder {
-        font-size: 0.70rem;
-        padding: 5px 4px;
-    }
-
-    .habilidades-list li {
-        font-size: 0.78rem;
-        line-height: 1.3;
     }
 }
 
