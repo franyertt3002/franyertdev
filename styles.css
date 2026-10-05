@@ -1101,29 +1101,96 @@ body {
   box-shadow: 0 0 6px #00d9ff;
 }
 
-/* 6. Adaptabilidad Móvil (Responsive breakpoint) */
+/* ==========================================================
+    RESPONSIVE / ADAPTATIVO A MÓVILES Y PANTALLAS TÁCTILES
+   ========================================================== */
+
+/* Laptop / Tablets en horizontal */
+@media (max-width: 1024px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .card-acerca {
+        grid-column: span 2;
+    }
+}
+
+/* Dispositivos Móviles y Pantallas Táctiles (768px o inferior) */
+@media (max-width: 768px) {
+    body {
+        align-items: flex-start;
+        padding: 16px 0;
+    }
+
+    .grid-container {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 92vw;
+        gap: 14px;
+        margin: 0 auto;
+    }
+
+    /* ORDEN JERÁRQUICO ESTRICTO EN MÓVIL */
+    .card-foto { order: 1 !important; }          /* 1. Imagen con "Disponible para trabajar" */
+    .card-perfil { order: 2 !important; }        /* 2. Encabezado Junior Developer */
+    .card-acerca { order: 3 !important; }        /* 3. Acerca de mí (proporciones de celular) */
+    .card-filosofia { order: 4 !important; }     /* 4. Habilidades blandas */
+    .card-conocimientos { order: 5 !important; } /* 5. Lenguajes aprendidos */
+    .card-habilidades { order: 6 !important; }   /* 6. Habilidades Técnicas */
+    .card-proyectos { order: 7 !important; }     /* 7. Proyectos */
+    .card-objetivos { order: 8 !important; }     /* 8. Objetivos (al final) */
+
+    /* Ajuste de proporciones para "Acerca de mí" en móviles */
+    .card-acerca {
+        grid-column: span 1 !important;
+        width: 100%;
+        padding: 16px 12px;
+    }
+
+    .carousel-3d-wrapper {
+        height: 160px;
+    }
+
+    .carousel-card {
+        padding: 14px 18px;
+    }
+
+    .carousel-card .card-content {
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+
+    /* Ajuste visual para la foto e insignia */
+    .img-wrapper {
+        width: 140px;
+        height: 140px;
+    }
+}
+
+/* Ajuste fino para pantallas táctiles en miniatura (menores a 480px) */
 @media (max-width: 480px) {
-  .card-habilidades {
-    padding: 12px 8px;
-  }
+    .card-habilidades {
+        padding: 12px 8px;
+    }
 
-  .tabs-folder-wrapper {
-    gap: 6px;
-  }
+    .tabs-folder-wrapper {
+        gap: 6px;
+    }
 
-  .tabs-row {
-    gap: 6px;
-  }
+    .tabs-row {
+        gap: 6px;
+    }
 
-  .tab-folder {
-    font-size: 0.70rem;
-    padding: 5px 4px;
-  }
+    .tab-folder {
+        font-size: 0.70rem;
+        padding: 5px 4px;
+    }
 
-  .habilidades-list li {
-    font-size: 0.78rem;
-    line-height: 1.3;
-  }
+    .habilidades-list li {
+        font-size: 0.78rem;
+        line-height: 1.3;
+    }
 }
 
 /* Scrollbar sutil e integrado */
@@ -1139,35 +1206,4 @@ body {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(2px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-@media (max-width: 650px) {
-    .grid-container {
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* NUEVA JERARQUÍA EN PANTALLAS TÁCTILES / MÓVILES */
-    .card-foto { order: 1; }          /* 1. Imagen disponible para trabajar */
-    .card-perfil { order: 2; }        /* 2. Encabezado Junior Developer */
-    .card-acerca { order: 3; }        /* 3. Acerca de mí (con proporciones de celular) */
-    .card-filosofia { order: 4; }     /* 4. Habilidades blandas */
-    .card-conocimientos { order: 5; } /* 5. Lenguajes aprendidos */
-    .card-habilidades { order: 6; }   /* 6. Habilidades Técnicas */
-    .card-proyectos { order: 7; }     /* 7. Proyectos */
-    
-    /* El resto de elementos mantienen la regla predeterminada o quedan al final */
-    .card-objetivos { order: 8; }
-
-    /* Ajustes visuales de la tarjeta "Acerca de mí" en móviles */
-    .card-acerca {
-        grid-column: span 1 !important;
-        width: 100%;
-        padding: 16px 12px;
-    }
-
-    .img-wrapper {
-        width: 130px;
-        height: 130px;
-    }
 }
