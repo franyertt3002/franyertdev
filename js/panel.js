@@ -32,17 +32,44 @@ function abrirDetalleProyecto(tipo) {
             break;
 
         case 'db':
-            // 3. BASE DE DATOS: Galería con la imagen de referencia (fondoa.png)
+            // 3. BASE DE DATOS: Galería interactiva expandible
             contenedor.innerHTML = `
-                <h2 style="margin-bottom: 20px; color: var(--text-primary);">Esquemas de Base de Datos y Auditoría</h2>
-                <div class="album-grid">
-                    <div class="web-card">
-                        <img src="Imagenes/fondoa.png" alt="Esquema Base de Datos" onerror="this.src='https://via.placeholder.com/600x350?text=Esquema+PostgreSQL'">
-                        <div class="web-card-info">
-                            <h4>Arquitectura & Diagnóstico SQL</h4>
-                            <p>Estructura relacional optimizada con triggers y procedimientos para control de calidad.</p>
+                <h3 class="db-title" id="dbTitle">Esquemas de Base de Datos y Auditoría</h3>
+                
+                <!-- Vista en Colmena -->
+                <div class="colmena-container" id="colmenaGrid">
+                    <!-- Fila Superior -->
+                    <div class="colmena-row-top">
+                        <div class="hex-item" onclick="expandirImagen('proyectos/Base De Datos/base de datos.png', 'base de datos')">
+                            <img src="proyectos/Base De Datos/base de datos.png" alt="base de datos">
+                            <div class="hex-caption">
+                                <span>base de datos</span>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- Fila Inferior -->
+                    <div class="colmena-row-bottom">
+                        <div class="hex-item" onclick="expandirImagen('proyectos/Base De Datos/Diagrama De Clases Del Sistema.png', 'Diagrama De Clases Del Sistema')">
+                            <img src="proyectos/Base De Datos/Diagrama De Clases Del Sistema.png" alt="Diagrama De Clases Del Sistema">
+                            <div class="hex-caption">
+                                <span>Diagrama De Clases Del Sistema</span>
+                            </div>
+                        </div>
+                        <div class="hex-item" onclick="expandirImagen('proyectos/Base De Datos/Diagrama Entidad Relacion.png', 'Diagrama Entidad Relacion')">
+                            <img src="proyectos/Base De Datos/Diagrama Entidad Relacion.png" alt="Diagrama Entidad Relacion">
+                            <div class="hex-caption">
+                                <span>Diagrama Entidad Relacion</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vista Ampliada/Expandida -->
+                <div class="hex-expanded-view" id="hexExpandedView">
+                    <img id="hexExpandedImg" src="" alt="Vista ampliada">
+                    <div class="hex-expanded-title" id="hexExpandedTitle"></div>
+                    <button class="btn-cerrar-expandido" onclick="restaurarColmena()">← Volver a la Galería</button>
                 </div>
             `;
             break;
@@ -195,3 +222,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+// Función para expandir la imagen seleccionada dentro del mismo apartado
+function expandirImagen(rutaSrc, titulo) {
+    const grid = document.getElementById('colmenaGrid');
+    const expandedView = document.getElementById('hexExpandedView');
+    const imgTarget = document.getElementById('hexExpandedImg');
+    const titleTarget = document.getElementById('hexExpandedTitle');
+
+    if (grid && expandedView && imgTarget && titleTarget) {
+        grid.style.display = 'none';
+        imgTarget.src = rutaSrc;
+        titleTarget.textContent = titulo;
+        expandedView.classList.add('active');
+    }
+}
+
+// Función para regresar a la vista piramidal
+function restaurarColmena() {
+    const grid = document.getElementById('colmenaGrid');
+    const expandedView = document.getElementById('hexExpandedView');
+
+    if (grid && expandedView) {
+        expandedView.classList.remove('active');
+        grid.style.display = 'flex';
+    }
+}

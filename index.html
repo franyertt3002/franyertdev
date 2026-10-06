@@ -277,11 +277,15 @@
 
     </main>
 
-    <!-- VISTA DINÁMICA DE DETALLE DE PROYECTOS (Carga Interna) -->
+    <!-- VISTA DINÁMICA DE DETALLE DE PROYECTOS -->
     <section class="overlay-proyecto" id="overlayProyecto">
-        <button class="btn-volver" onclick="cerrarDetalleProyecto()">← Volver</button>
+        <!-- Botón Volver con estilo unificado de flecha -->
+        <button class="btn-volver" onclick="cerrarDetalleProyecto()" aria-label="Volver">
+            &#129144;
+        </button>
+    
         <div class="contenido-dinamico" id="contenidoDinamico">
-            <!-- El contenido dinámico se inyectará desde JS -->
+            <!-- El contenido específico de Base de Datos se inyecta desde JS -->
         </div>
     </section>
 
