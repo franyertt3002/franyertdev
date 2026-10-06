@@ -40,10 +40,10 @@ function abrirDetalleProyecto(tipo) {
                 <div class="colmena-container" id="colmenaGrid">
                     <!-- Fila Superior -->
                     <div class="colmena-row-top">
-                        <div class="hex-item" onclick="expandirImagen('proyectos/Base De Datos/base de datos.png', 'base de datos')">
-                            <img src="proyectos/Base De Datos/base de datos.png" alt="base de datos">
+                        <div class="hex-item" onclick="expandirImagen('proyectos/Base De Datos/base de datos.jpeg', 'Base De Datos')">
+                            <img src="proyectos/Base De Datos/base de datos.jpeg" alt="Base De Datos">
                             <div class="hex-caption">
-                                <span>base de datos</span>
+                                <span>Base De Datos</span>
                             </div>
                         </div>
                     </div>
