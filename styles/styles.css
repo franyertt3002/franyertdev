@@ -1319,3 +1319,88 @@ body {
     from { opacity: 0; transform: scale(0.95); }
     to { opacity: 1; transform: scale(1); }
 }
+
+/* ==========================================================
+   ADAPTATIVIDAD RESPONSIVA: TABLETS Y MÓVILES
+   ========================================================== */
+
+/* --- TABLETS (Pantallas de hasta 768px) --- */
+@media screen and (max-width: 768px) {
+    /* Ajuste de contenedor y botón */
+    .btn-volver {
+        top: 16px;
+        left: 16px;
+        width: 42px;
+        height: 42px;
+        font-size: 1.1rem;
+    }
+
+    .db-title {
+        font-size: 1.25rem;
+        margin-top: 10px;
+        margin-bottom: 15px;
+    }
+
+    /* Reducción proporcional de hexágonos */
+    .hex-item {
+        width: 210px;
+        height: 230px;
+    }
+
+    .colmena-row-bottom {
+        gap: 12px;
+        margin-top: -40px; /* Recorte inter-fila ajustado al nuevo tamaño */
+    }
+
+    .hex-caption span {
+        font-size: 0.85rem;
+    }
+
+    /* Vista expandida adaptada */
+    .hex-expanded-view img {
+        max-width: 95vw;
+        max-height: 60vh;
+    }
+}
+
+/* --- MÓVILES (Pantallas de hasta 480px) --- */
+@media screen and (max-width: 480px) {
+    .btn-volver {
+        top: 12px;
+        left: 12px;
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+    }
+
+    .db-title {
+        font-size: 1.1rem;
+        padding: 0 10px;
+    }
+
+    /* Escala optimizada para pantallas estrechas manteniendo la pirámide */
+    .hex-item {
+        width: 150px;
+        height: 165px;
+    }
+
+    .colmena-row-bottom {
+        gap: 6px;
+        margin-top: -28px;
+    }
+
+    .hex-caption {
+        padding: 8px;
+    }
+
+    .hex-caption span {
+        font-size: 0.72rem;
+        line-height: 1.1;
+    }
+
+    /* Ajuste para el botón de regresar desde la imagen expandida */
+    .btn-cerrar-expandido {
+        padding: 6px 14px;
+        font-size: 0.8rem;
+    }
+}
