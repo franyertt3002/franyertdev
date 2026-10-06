@@ -41,7 +41,7 @@ function abrirDetalleProyecto(tipo) {
                     <!-- Fila Superior -->
                     <div class="colmena-row-top">
                         <div class="hex-item" onclick="expandirImagen('proyectos/Base De Datos/base de datos.jpeg', 'Base De Datos')">
-                            <img src="proyectos/Base De Datos/base de datos.jpeg" alt="Base De Datos">
+                            <img src="proyectos/Base De Datos/base de datos.jpeg" alt="base de datos">
                             <div class="hex-caption">
                                 <span>Base De Datos</span>
                             </div>
